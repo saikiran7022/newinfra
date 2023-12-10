@@ -50,13 +50,3 @@ app.kubernetes.io/name: {{ include "tomcatcharts.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "tomcatcharts.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "tomcatcharts.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
