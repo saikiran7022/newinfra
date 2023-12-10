@@ -11,7 +11,7 @@ spec:
       version: "1.2.3"  # Replace with the desired chart version
       sourceRef:
         kind: GitRepository
-        name: newinfra  # Refer to the HelmRepository defined above
+        name: flux-system  # Refer to the HelmRepository defined above
         namespace: flux-system
       valuesFiles:
         - tomcatcharts/values.yaml
@@ -30,6 +30,6 @@ spec:
     port: 8080
     targetPort: 8080
 
-    
+
 
     
