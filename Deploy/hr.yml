@@ -20,3 +20,16 @@ spec:
     createNamespace: true
   rollback:
     force: true
+  values: 
+    repository: saikiran900/tomcatimage
+    pullpolicy: ifNotPresent
+    tag: 0.0.1
+
+  service:
+    type: NodePort
+    port: 8080
+    targetPort: 8080
+
+    
+
+    
