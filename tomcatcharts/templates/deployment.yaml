@@ -39,21 +39,14 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
-            - name: app-config-volume
-              mountPath: /opt
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
+          - name: app-config-volume
+            mountPath: /opt
       volumes:
         - name: app-config-volume
           configMap:
             name: {{ include "tomcatcharts.fullname" . }}-app-config
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+            
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
