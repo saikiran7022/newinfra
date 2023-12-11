@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "my-chart.fullname" . }}-app-config
+  name: {{ include "tomcatcharts.fullname" . }}-app-config
 data:
   app.conf: |-
 {{ .Files.Get (printf "conf/%s/app.conf" .Values.environment) | indent 4 }}
