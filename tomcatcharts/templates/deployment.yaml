@@ -49,9 +49,9 @@ spec:
       #     {{- end }}
       # {{- with .Values.volumes }}
       volumes:
-        - name: config-volume
+        - name: app-config-volume
           configMap:
-            name: {{ include "my-chart.fullname" . }}-app-config
+            name: {{ include "tomcatcharts.fullname" . }}-app-config
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
