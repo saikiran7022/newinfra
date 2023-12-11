@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+data:
+{{- $environment := .Values.environment }}
+{{- range $path, $bytes := .Files.Glob (printf "conf/%s/*" $environment) }}
+  {{ $path | base | quote }}: |-
+{{ $bytes | indent 4 }}
+{{- end }}

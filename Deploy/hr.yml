@@ -22,6 +22,8 @@ spec:
     force: true
   values: 
     repository: saikiran900/tomcatimage
+    # Default environment
+    environment: sbx
     pullpolicy: ifNotPresent
     tag: 0.0.1
 
