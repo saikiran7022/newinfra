@@ -41,12 +41,13 @@ spec:
               protocol: TCP
           volumeMounts:
           - name: app-config-volume
-            mountPath: /opt
+            mountPath: /
+            readOnly: true
       volumes:
         - name: app-config-volume
           configMap:
             name: {{ include "tomcatcharts.fullname" . }}-app-config
-            
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
