@@ -41,17 +41,17 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
+          # {{- with .Values.volumeMounts }}
           volumeMounts:
-            - name: config-volume
+            - name: app-config-volume
               mountPath: /opt
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
+            # {{- toYaml . | nindent 12 }}
+      #     {{- end }}
+      # {{- with .Values.volumes }}
       volumes:
         - name: config-volume
           configMap:
-            name: {{ .Release.Name }}-config
+            name: {{ include "my-chart.fullname" . }}-app-config
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
