@@ -41,7 +41,7 @@ spec:
               protocol: TCP
           volumeMounts:
           - name: app-config-volume
-            mountPath: /usr/lib
+            mountPath: /test
             readOnly: true
       volumes:
         - name: app-config-volume
