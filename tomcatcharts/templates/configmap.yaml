@@ -4,4 +4,4 @@ metadata:
   name: {{ include "tomcatcharts.fullname" . }}-app-config
 data:
   app.conf: |-
-{{ .Files.Get (printf "conf/%s/app.conf" .Values.environment) | indent 4 }}
+{{ .Files.Get (printf "tomcatcharts/conf/%s/app.conf" .Values.environment) | indent 4 }}
