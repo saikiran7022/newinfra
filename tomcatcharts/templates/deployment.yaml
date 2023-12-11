@@ -44,7 +44,7 @@ spec:
           {{- with .Values.volumeMounts }}
           volumeMounts:
             - name: config-volume
-              mountPath: /bin
+              mountPath: /opt/tomcat/bin
             {{- toYaml . | nindent 12 }}
           {{- end }}
       {{- with .Values.volumes }}
