@@ -1,0 +1,86 @@
+# Define the policy for the project
+- !policy
+  id: project_policy
+  body:
+    # Users for the project (if users are specific to environments, define them within each environment section)
+    - !policy
+      id: users
+      body:
+        - !user team1_user
+        - !user team2_user
+        - !user team3_user
+
+    # Define environment-specific policies
+    # Development Environment
+    - !policy
+      id: dev
+      body:
+        # Define hosts for development environment
+        - !policy
+          id: hosts
+          body:
+            - !host team1/app1/dev
+            # Add additional development hosts as needed
+
+        # Development secrets
+        - !policy
+          id: secrets
+          body:
+            - !variable app1/secret1
+            - !variable app2/secret1
+            # Define other development secrets
+
+    # Staging Environment
+    - !policy
+      id: staging
+      body:
+        # Define hosts for staging environment
+        - !policy
+          id: hosts
+          body:
+            - !host team1/app1/staging
+            # Add additional staging hosts as needed
+
+        # Staging secrets
+        - !policy
+          id: secrets
+          body:
+            - !variable app1/secret1
+            - !variable app2/secret1
+            # Define other staging secrets
+
+    # Production Environment
+    - !policy
+      id: prod
+      body:
+        # Define hosts for production environment
+        - !policy
+          id: hosts
+          body:
+            - !host team1/app1/prod
+            # Add additional production hosts as needed
+
+        # Production secrets
+        - !policy
+          id: secrets
+          body:
+            - !variable app1/secret1
+            - !variable app2/secret1
+            # Define other production secrets
+
+    # Define groups for access control (if needed globally or define within each environment)
+    - !policy
+      id: groups
+      body:
+        - !group secrets-users
+        - !group secrets-managers
+
+        # Global permissions or define permissions within each environment if they differ
+        - !permit
+          role: !group secrets-users
+          privilege: [read, execute]
+          resource: !variable app1/secret1
+        - !permit
+          role: !group secrets-managers
+          privilege: [read, execute, update]
+          resource: !variable app1/secret1
