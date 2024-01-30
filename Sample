@@ -1,0 +1,48 @@
+# Define the policy for the project
+- !policy
+  id: project_policy
+  body:
+    # Define users for each team
+    - !policy
+      id: users
+      body:
+        - !user team1_user
+        - !user team2_user
+        - !user team3_user
+
+    # Define hosts for each microapp in each environment
+    - !policy
+      id: hosts
+      body:
+        - !host
+          id: team1/app1/dev
+        - !host
+          id: team1/app1/staging
+        - !host
+          id: team1/app1/prod
+        # Repeat for each app and environment as needed
+
+    # Define groups for access control
+    - !policy
+      id: groups
+      body:
+        - !group secrets-users
+        - !group secrets-managers
+
+    # Permissions for users and groups
+    - !permit
+      role: !group secrets-users
+      privilege: [read, execute]
+      resource: !variable app1/secret1
+    - !permit
+      role: !group secrets-managers
+      privilege: [read, execute, update]
+      resource: !variable app1/secret1
+
+    # Define secrets for each app
+    - !policy
+      id: secrets
+      body:
+        - !variable app1/secret1
+        - !variable app2/secret1
+        # Repeat for each secret needed
