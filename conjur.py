@@ -55,3 +55,65 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
+
+
+
+
+
+Setting up Conjur OSS (Open Source Software) on Kubernetes using Helm involves several steps. Helm simplifies the deployment of applications on Kubernetes clusters by managing packages called charts. Conjur OSS is a powerful secret management tool that helps you manage and secure access to secrets (such as keys, tokens, and other sensitive data) in applications, systems, and infrastructure.
+
+Below is a high-level guide on how to set up Conjur OSS in Kubernetes using Helm. This guide assumes you have a Kubernetes cluster running and Helm installed on your local machine.
+
+### Step 1: Add CyberArk Helm Repository
+
+Before you can install Conjur OSS using Helm, you need to add the CyberArk Helm repository to your Helm client. This repository contains the charts for deploying Conjur OSS.
+
+```shell
+helm repo add cyberark https://cyberark.github.io/helm-charts
+helm repo update
+```
+
+### Step 2: Create a Namespace for Conjur OSS
+
+It's a good practice to deploy applications within their own Kubernetes namespaces to isolate resources and manage access more securely.
+
+```shell
+kubectl create namespace conjur-oss
+```
+
+### Step 3: Install Conjur OSS using Helm
+
+Now, you can install Conjur OSS using Helm. You'll specify the namespace you created in the previous step. You may also need to customize the installation by creating a `values.yaml` file if you need to override default configuration values.
+
+```shell
+helm install conjur-oss cyberark/conjur-oss --namespace conjur-oss --set dataKey="$(docker run --rm cyberark/conjur data-key generate)"
+```
+
+The `dataKey` is a required setting for the Helm chart, used to secure the data stored by Conjur. This command uses Docker to run a Conjur container just to generate a new data key. If you're not using Docker, you'll need to find another way to generate this key.
+
+### Step 4: Configure Access to Conjur OSS
+
+After installation, you'll need to set up access to Conjur OSS for your applications. This typically involves configuring Kubernetes authentication with Conjur and managing policies for secrets access.
+
+1. **Configure Kubernetes Authenticator**: You'll need to enable and configure the Kubernetes authenticator in Conjur. This involves setting up a Conjur policy that defines the Kubernetes authenticator and its permitted hosts.
+
+2. **Create Conjur Policies**: Define Conjur policies to manage access to secrets. Policies define roles (such as users or applications) and permissions on secrets.
+
+3. **Inject Secrets into Applications**: Use Conjur's Kubernetes authenticator and secrets provider to securely inject secrets into your applications running in Kubernetes.
+
+### Step 5: Verify the Installation
+
+Verify that Conjur OSS is running and accessible by listing the pods in the `conjur-oss` namespace and checking the logs of the Conjur OSS pod.
+
+```shell
+kubectl get pods -n conjur-oss
+kubectl logs <conjur-oss-pod-name> -n conjur-oss
+```
+
+### Additional Configuration and Usage
+
+
